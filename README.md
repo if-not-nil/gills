@@ -42,8 +42,33 @@ ephemeral
 ephemeral
 [~/gill] go run . -f10
 5.172420807954689
-[~/fill] go run . -i10
+[~/gill] go run . -i10
 3
+```
+
+## slice
+cut a file. your shell gives you functionality to do so from stdio as well
+
+```bash
+[~/gill] slice main.go[1:] # or slice main.go [1]
+    - whole file starting from the first character 
+[~/gill] slice -[1:]
+    - standard input from the first character 
+[~/gill] slice main.go[1:] -z # zero-indexed
+    - whole file starting from the second character
+[~/gill] slice main.go[1l:20l]
+    - lines 1-20 
+[~/gill] slice main.go[1l:20l]
+    - words 1-20 
+[~/gill] slice main.go[1:20]
+    - characters 1-20 
+[~/gill] slice main.go[1_3:2_3]
+    - characters 1*(10^3)-1*(10^3), so 1000-2000
+[~/gill] slice main.go[1b:20b]
+    - bytes 1-20 
+[~/gill] slice main.go[1kb:20kb]
+    - kilobytes 1-20. accepted are kB 
+    - accepted are b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024
 ```
 
 ## new
