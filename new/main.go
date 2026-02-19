@@ -128,13 +128,14 @@ func (req *Request) parse_flag(flag string) {
 }
 
 func usage() {
-	fmt.Println("usage: new [-rwxRWX...] <path> [<path> ...]")
-	fmt.Println("  lowercase = enable bit, uppercase = disable bit")
-	fmt.Println("  r/R = read, w/W = write, x/X = execute, o/O = overwrite")
-	fmt.Println("  repeat a letter up to 3 times for user/group/other")
-	fmt.Println("  a single -x fans out to all three groups")
-	fmt.Println("  path with trailing / creates a directory")
-	fmt.Println("  nested paths (a/b/c) create intermediate directories")
+	fmt.Fprintln(os.Stderr, `
+usage: new [-rwxRWX...] <path> [<path> ...]
+  lowercase = enable bit, uppercase = disable bit
+  r/R = read, w/W = write, x/X = execute, o/O = overwrite
+  repeat a letter up to 3 times for user/group/other
+  a single -x fans out to all three groups
+  path with trailing / creates a directory
+  nested paths (a/b/c) create intermediate directories`)
 	os.Exit(1)
 }
 

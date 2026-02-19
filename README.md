@@ -58,7 +58,7 @@ cut a file. your shell gives you functionality to do so from stdio as well
     - whole file starting from the second character
 [~/gill] slice main.go[1l:20l]
     - lines 1-20 
-[~/gill] slice main.go[1l:20l]
+[~/gill] slice main.go[1w:20w]
     - words 1-20 
 [~/gill] slice main.go[1:20]
     - characters 1-20 
