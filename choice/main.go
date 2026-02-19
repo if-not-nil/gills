@@ -14,9 +14,8 @@ func usage() {
 usage: choice [flags] [choices]
 you may be looking for choice --example
 
-output: random item(s) from args or stdin (one item per line)")
-")
-flags:")
+output: random item(s) from args or stdin (one item per line)
+flags:
   -i[N]        random integer from 0 to N (default 1)")
   -f[N]        random float from 0 to N (default 1)")
   -n K         pick K items (default 1)")
@@ -26,27 +25,27 @@ flags:")
   -x VAL       exclude VAL from choices (repeatable)")
   -S SEED      seed for reproducible output")
   -c           print count of choices and exit")
-")
 weighted choices: suffix with :N e.g. 'a:3 b:1'`)
 	os.Exit(1)
 }
 
 func example() {
-	fmt.Fprintln(os.Stderr, `choice a b c                    pick one of a, b, c
-choice -n3 a b c d e            pick 3 (with replacement)
-choice -nu3 a b c d e           pick 3 unique
-choice -s a b c d               shuffle all
-choice -n3 -d, a b c d e        pick 3, comma-separated
-choice -x b a b c               pick from a, c only
-choice 'rare:1' 'common:9'      weighted pick
-choice -S42 a b c               reproducible output
-choice -i100                    random int 0-100
-choice -f3.14                   random float 0-3.14
-choice -c a b c d               print 4
-cat words.txt | choice          pick random line from file
-cat words.txt | choice -s       shuffle file lines
-cat words.txt | choice -nu5     pick 5 unique lines
-cat words.txt | choice a b      pick from file lines + a, b`)
+	fmt.Fprintln(os.Stderr,
+`* choice a b c                    pick one of a, b, c
+* choice -n3 a b c d e            pick 3 (with replacement)
+* choice -nu3 a b c d e           pick 3 unique
+* choice -s a b c d               shuffle all
+* choice -n3 -d, a b c d e        pick 3, comma-separated
+* choice -x b a b c               pick from a, c only
+* choice 'rare:1' 'common:9'      weighted pick
+* choice -S42 a b c               reproducible output
+* choice -i100                    random int 0-100
+* choice -f3.14                   random float 0-3.14
+* choice -c a b c d               print 4
+* cat words.txt | choice          pick random line from file
+* cat words.txt | choice -s       shuffle file lines
+* cat words.txt | choice -nu5     pick 5 unique lines
+* cat words.txt | choice a b      pick from file lines + a, b`)
 	os.Exit(1)
 }
 
@@ -115,7 +114,7 @@ func printResults(results []string, delim string) {
 func main() {
 	args := os.Args[1:]
 
-	if len(args) > 0 && (args[0] == "-example") {
+	if len(args) > 0 && (args[0] == "--example") {
 		example()
 		os.Exit(1)
 	}

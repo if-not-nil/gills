@@ -1,9 +1,9 @@
-# gills
-lung's userspace utils
+# lung's userspace utils
+> to make convenient software you won't forget how to use
 
-> !!!all original utils include a --example flag which gives you a bunch of usage examples. pls use that
+all original utils include a --example flag which gives you a bunch of usage examples. pls use that
 
-all tailored, not painful to compile, easy to modify
+all not painful to compile, easy to modify
 
 ## not in this repo but are part of this 
 all written in go
@@ -76,21 +76,21 @@ cut a file. your shell gives you functionality to do so from stdio as well
 ## new
 create/update files/directories with permissions intuitively
 
-```c
-// sample -
-//
-//	new -rwx install - creates a new file called install with rwx perms for all groups
-//	new -rw install - creates install with rw-rw-rw-
-//	new -rwxRWxrwx install - rwx--xrwx
-//	new -Rrxxx install - -wxrwxrwx (R disables read for user, lowercase enable for group+other)
-//	new -rwx build/ - creates a build/ dir with rwx for all groups
-//	new build/asdf - creates build/ dir and asdf inside with no perms specified (0000)
-//	new -rwx src/main/asdf - recursively creates src/ and main/ then asdf with rwxrwxrwx
-//	new -x asdf - if asdf exists, adds x for all groups; if new, creates with --x--x--x
-//	new -X asdf - removes x from all groups on existing file
-//	new -rwx asdf nasdf - creates both asdf and nasdf with rwxrwxrwx
-//	new -rwx asdf -rw nasdf - asdf gets rwxrwxrwx, nasdf gets rw-rw-rw-package main
-//  new go run . aaa/addsaf/asdf/asd/f - created aaa/addsaf/asdf/asd/f (0000)
+```bash
+sample -
+
+new -rwx install - creates a new file called install with rwx perms for all groups
+new -rw install - creates install with rw-rw-rw-
+new -rwxRWxrwx install - rwx--xrwx
+new -Rrxxx install - -wxrwxrwx (R disables read for user, lowercase enable for group+other)
+new -rwx build/ - creates a build/ dir with rwx for all groups
+new build/asdf - creates build/ dir and asdf inside with no perms specified (0000)
+new -rwx src/main/asdf - recursively creates src/ and main/ then asdf with rwxrwxrwx
+new -x asdf - if asdf exists, adds x for all groups; if new, creates with --x--x--x
+new -X asdf - removes x from all groups on existing file
+new -rwx asdf nasdf - creates both asdf and nasdf with rwxrwxrwx
+new -rwx asdf -rw nasdf - asdf gets rwxrwxrwx, nasdf gets rw-rw-rw-package main
+new go run . aaa/addsaf/asdf/asd/f - created aaa/addsaf/asdf/asd/f (0000)
 ```
 
 # not done
@@ -145,3 +145,13 @@ cal:
 [~] cat ./message.yaml | mail send
 # and then it gets sent kinda
 ```
+
+# todo
+- [ ] make into a multicall binary, just like busybox
+- [ ] add colors to example and help sections
+- [ ] make usage generators a library
+
+# contributing
+if it's a fix im definitely accepting it
+
+if you want to add a new feature/utility, ask in the issues section. unless its not an original utility and there's a function that exists in the original software, then just add it
