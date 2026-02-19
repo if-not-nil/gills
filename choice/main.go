@@ -10,41 +10,43 @@ import (
 )
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: choice [flags] [choices]")
-	fmt.Fprintln(os.Stderr, "output: random item(s) from args or stdin (one item per line)")
-	fmt.Fprintln(os.Stderr, "")
-	fmt.Fprintln(os.Stderr, "flags:")
-	fmt.Fprintln(os.Stderr, "  -i[N]        random integer from 0 to N (default 1)")
-	fmt.Fprintln(os.Stderr, "  -f[N]        random float from 0 to N (default 1)")
-	fmt.Fprintln(os.Stderr, "  -n K         pick K items (default 1)")
-	fmt.Fprintln(os.Stderr, "  -nu K        pick K unique items (no repeats)")
-	fmt.Fprintln(os.Stderr, "  -s           shuffle: print all choices in random order")
-	fmt.Fprintln(os.Stderr, "  -d DELIM     join output with DELIM instead of newlines")
-	fmt.Fprintln(os.Stderr, "  -x VAL       exclude VAL from choices (repeatable)")
-	fmt.Fprintln(os.Stderr, "  -S SEED      seed for reproducible output")
-	fmt.Fprintln(os.Stderr, "  -c           print count of choices and exit")
-	fmt.Fprintln(os.Stderr, "")
-	fmt.Fprintln(os.Stderr, "weighted choices: suffix with :N e.g. 'a:3 b:1'")
+	fmt.Fprintln(os.Stderr,`
+usage: choice [flags] [choices]
+you may be looking for choice --example
+
+output: random item(s) from args or stdin (one item per line)")
+")
+flags:")
+  -i[N]        random integer from 0 to N (default 1)")
+  -f[N]        random float from 0 to N (default 1)")
+  -n K         pick K items (default 1)")
+  -nu K        pick K unique items (no repeats)")
+  -s           shuffle: print all choices in random order")
+  -d DELIM     join output with DELIM instead of newlines")
+  -x VAL       exclude VAL from choices (repeatable)")
+  -S SEED      seed for reproducible output")
+  -c           print count of choices and exit")
+")
+weighted choices: suffix with :N e.g. 'a:3 b:1'`)
 	os.Exit(1)
 }
 
 func example() {
-	fmt.Fprintln(os.Stderr, "examples:")
-	fmt.Fprintln(os.Stderr, "  choice a b c                    pick one of a, b, c")
-	fmt.Fprintln(os.Stderr, "  choice -n3 a b c d e            pick 3 (with replacement)")
-	fmt.Fprintln(os.Stderr, "  choice -nu3 a b c d e           pick 3 unique")
-	fmt.Fprintln(os.Stderr, "  choice -s a b c d               shuffle all")
-	fmt.Fprintln(os.Stderr, "  choice -n3 -d, a b c d e        pick 3, comma-separated")
-	fmt.Fprintln(os.Stderr, "  choice -x b a b c               pick from a, c only")
-	fmt.Fprintln(os.Stderr, "  choice 'rare:1' 'common:9'      weighted pick")
-	fmt.Fprintln(os.Stderr, "  choice -S42 a b c               reproducible output")
-	fmt.Fprintln(os.Stderr, "  choice -i100                    random int 0-100")
-	fmt.Fprintln(os.Stderr, "  choice -f3.14                   random float 0-3.14")
-	fmt.Fprintln(os.Stderr, "  choice -c a b c d               print 4")
-	fmt.Fprintln(os.Stderr, "  cat words.txt | choice          pick random line from file")
-	fmt.Fprintln(os.Stderr, "  cat words.txt | choice -s       shuffle file lines")
-	fmt.Fprintln(os.Stderr, "  cat words.txt | choice -nu5     pick 5 unique lines")
-	fmt.Fprintln(os.Stderr, "  cat words.txt | choice a b      pick from file lines + a, b")
+	fmt.Fprintln(os.Stderr, `choice a b c                    pick one of a, b, c
+choice -n3 a b c d e            pick 3 (with replacement)
+choice -nu3 a b c d e           pick 3 unique
+choice -s a b c d               shuffle all
+choice -n3 -d, a b c d e        pick 3, comma-separated
+choice -x b a b c               pick from a, c only
+choice 'rare:1' 'common:9'      weighted pick
+choice -S42 a b c               reproducible output
+choice -i100                    random int 0-100
+choice -f3.14                   random float 0-3.14
+choice -c a b c d               print 4
+cat words.txt | choice          pick random line from file
+cat words.txt | choice -s       shuffle file lines
+cat words.txt | choice -nu5     pick 5 unique lines
+cat words.txt | choice a b      pick from file lines + a, b`)
 	os.Exit(1)
 }
 

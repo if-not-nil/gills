@@ -14,8 +14,13 @@ import (
 
 func main() {
 	zeroIndexed := flag.BoolP("zero-indexed", "z", false, "use 0-based indexing (default is 1-based)")
+	flagExamples := flag.Bool("example", false, "show usage examples and exit")
 	flag.Usage = usage
 	flag.Parse()
+	if *flagExamples {
+		example()
+		os.Exit(1)
+	}
 
 	args := flag.Args()
 	if len(args) == 0 {
@@ -69,6 +74,7 @@ var sizeSuffixes = map[string]uint64{
 
 func usage() {
 	fmt.Fprintln(os.Stderr, `slice — print a slice of a file or stdin
+you may be looking for 'slice --example'
 
 usage:
   slice [flags] <file>[<lower>:<upper>]
@@ -91,6 +97,28 @@ bound syntax:
 
 flags:`)
 	flag.PrintDefaults()
+}
+
+func example() {
+	fmt.Fprintln(os.Stderr, `slice main.go[1:] # or slice main.go [1]
+  - whole file starting from the first character 
+slice -[1:]
+  - standard input from the first character 
+slice main.go[1:] -z # zero-indexed
+  - whole file starting from the second character
+slice main.go[1l:20l]
+  - lines 1-20 
+slice main.go[1w:20w]
+  - words 1-20 
+slice main.go[1:20]
+  - characters 1-20 
+slice main.go[1_3:2_3]
+  - characters 1*(10^3)-1*(10^3), so 1000-2000
+slice main.go[1b:20b]
+  - bytes 1-20 
+slice main.go[1kb:20kb]
+  - kilobytes 1-20. accepted are kB 
+  - accepted are b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024`)
 }
 
 func parse_bound(s string) (Bound, error) {

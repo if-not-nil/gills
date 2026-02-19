@@ -1,6 +1,8 @@
 # gills
 lung's userspace utils
 
+> !!!all original utils include a --example flag which gives you a bunch of usage examples. pls use that
+
 all tailored, not painful to compile, easy to modify
 
 ## not in this repo but are part of this 

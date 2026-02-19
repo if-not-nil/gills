@@ -2,26 +2,31 @@ package main
 
 // sample -
 //
-//	new -rwx install - creates a new file called install with rwx perms for all groups
-//	new -rw install - creates install with rw-rw-rw-
-//	new -rwxRWxrwx install - rwx--xrwx
-//	new -Rrxxx install - -wxrwxrwx (R disables read for user, lowercase enable for group+other)
-//	new -rwx build/ - creates a build/ dir with rwx for all groups
-//	new build/asdf - creates build/ dir and asdf inside with no perms specified (0000)
-//	new -rwx src/main/asdf - recursively creates src/ and main/ then asdf with rwxrwxrwx
-//	new -x asdf - if asdf exists, adds x for all groups; if new, creates with --x--x--x
-//	new -X asdf - removes x from all groups on existing file
-//	new -rwx asdf nasdf - creates both asdf and nasdf with rwxrwxrwx
-//	new -rwx asdf -rw nasdf - asdf gets rwxrwxrwx, nasdf gets rw-rw-rw-package main
-//  new go run . aaa/addsaf/asdf/asd/f - created aaa/addsaf/asdf/asd/f (0000)
 
 import (
 	"fmt"
 	"io/fs"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 )
+
+func example() {
+	fmt.Fprintln(os.Stderr, `new -rwx install - creates a new file called install with rwx perms for all groups
+new -rw install - creates install with rw-rw-rw-
+new -rwxRWxrwx install - rwx--xrwx
+new -Rrxxx install - -wxrwxrwx (R disables read for user, lowercase enable for group+other)
+new -rwx build/ - creates a build/ dir with rwx for all groups
+new build/asdf - creates build/ dir and asdf inside with no perms specified (0000)
+new -rwx src/main/asdf - recursively creates src/ and main/ then asdf with rwxrwxrwx
+new -x asdf - if asdf exists, adds x for all groups; if new, creates with --x--x--x
+new -X asdf - removes x from all groups on existing file
+new -rwx asdf nasdf - creates both asdf and nasdf with rwxrwxrwx
+new -rwx asdf -rw nasdf - asdf gets rwxrwxrwx, nasdf gets rw-rw-rw-package main
+new go run . aaa/addsaf/asdf/asd/f - created aaa/addsaf/asdf/asd/f (0000) `)
+
+}
 
 type BitState int
 
@@ -128,10 +133,12 @@ func (req *Request) parse_flag(flag string) {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, `
-usage: new [-rwxRWX...] <path> [<path> ...]
-  lowercase = enable bit, uppercase = disable bit
-  r/R = read, w/W = write, x/X = execute, o/O = overwrite
+	fmt.Fprintln(os.Stderr, `usage: new [-rwxRWX...] <path> [<path> ...]
+you may be looking for 'new --example'
+
+in params (-rwxRWX...):
+	lowercase = enable bit, uppercase = disable bit
+	r/R = read, w/W = write, x/X = execute, o/O = overwrite
   repeat a letter up to 3 times for user/group/other
   a single -x fans out to all three groups
   path with trailing / creates a directory
@@ -211,6 +218,11 @@ func create(req Request) {
 
 func main() {
 	args := os.Args[1:]
+	if slices.Contains(args, "--example") {
+		example()
+		os.Exit(1)
+	}
+
 	if len(args) == 0 {
 		usage()
 	}
